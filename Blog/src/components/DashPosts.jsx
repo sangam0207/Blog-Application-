@@ -1,4 +1,4 @@
-import { Table } from "flowbite-react";
+import { Button, Table } from "flowbite-react";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 const DashPosts = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [posts, setPosts] = useState([]);
+  const[showMore,setShowMore]=useState(true)
   //console.log(posts);
   const fetchPost = async () => {
     
@@ -26,6 +27,9 @@ const DashPosts = () => {
   useEffect(() => {
     if (currentUser.isAdmin) {
       fetchPost();
+      if(posts.length<9){
+       // setShowMore(false);
+      }
     }
   }, []);
   const handleDelete = async (id) => {
@@ -42,6 +46,20 @@ const DashPosts = () => {
       console.log("error", error);
     }
   };
+  const handleShowMore=async()=>{
+try {
+  const userId = currentUser._id;
+  const response=await axios.get(`/api/posts/getPosts?userId=${userId}&startIndex=${posts.length}`)
+  console.log(response)
+  if(response.data.posts.length<9){
+    setShowMore(false)
+  }
+  setPosts((prev)=>[...prev,...response.data.posts]);
+
+} catch (error) {
+  console.log(error.message)
+}
+  }
   return (
     <>
       {currentUser.isAdmin === true ? (
@@ -91,6 +109,10 @@ const DashPosts = () => {
               })}
             </Table.Body>
           </Table>
+          <div className="flex justify-center my-6 ">
+          {showMore && <button onClick={handleShowMore} className="text-blue-700 hover:text-green-700">Show More</button>}
+          </div>
+        
         </div>
       ) : (
         <div className="ml-4  w-full text-center">

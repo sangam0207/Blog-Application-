@@ -25,6 +25,7 @@ const DashProfile = () => {
   const [formData, setFormData] = useState(null);
   const [imageUploadError, setImageUploadError] = useState(null);
   const[updateProfileSuccess,setUpdateProfileSuccess]=useState(false)
+  const [showMore,setShowMore]=useState(true);
   const fileOpenRef = useRef();
   const navigate = useNavigate();
 
