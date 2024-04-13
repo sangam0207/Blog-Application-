@@ -114,7 +114,7 @@ const DashProfile = () => {
       const response = await axios.delete(
         `/api/user/deleteProfile/${currentUser._id}`
       );
-      console.log(response);
+      //console.log(response);
       const data = response.data;
       if (data.success === false) {
         console.log("Internal server Error");

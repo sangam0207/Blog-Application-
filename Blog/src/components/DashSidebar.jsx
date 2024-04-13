@@ -21,9 +21,9 @@ const DashSidebar = () => {
   const navigate = useNavigate();
   const [tab, setTab] = useState("");
   const { currentUser } = useSelector((state) => state.user);
-  console.log(location);
+  //console.log(location);
   useEffect(() => {
-    console.log(location.search);
+    //console.log(location.search);
 
     const urlParams = new URLSearchParams(location.search);
     //console.log(urlParams)
@@ -49,7 +49,7 @@ const DashSidebar = () => {
 
   return (
     <div>
-      <Sidebar className="w-full md:w-60 md:h-screen border  ">
+      <Sidebar className="w-full md:w-60 md:h-screen border">
         <Sidebar.Items>
           <Sidebar.ItemGroup>
             <Link to="/dashboard?tab=profile">

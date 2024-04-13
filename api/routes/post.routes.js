@@ -6,7 +6,7 @@ router.get('/test',test)
 router.post('/create',isAuthorized,createPost);
 router.get('/getPosts',getPosts);
 router.delete('/deletePost/:id',deletePost);
-router.put('updatePosts/:id',updatePosts);
+router.put('updatePost/:id',updatePosts);
 
 
 export default router;

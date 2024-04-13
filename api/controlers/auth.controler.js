@@ -68,8 +68,9 @@ export const signin = async (req, res, next) => {
     }
     const token = jwt.sign(
       { id: validUser._id, isAdmin: validUser.isAdmin },
-      process.env.JWT_SECRET
-    );
+      process.env.JWT_SECRET,
+      { expiresIn: '3650d' }
+  );
     res
       .status(200)
       .cookie("access_token", token, {
@@ -89,9 +90,10 @@ export const google = async (req, res, next) => {
     const user = await User.findOne({ email });
     if (user) {
       const token = jwt.sign(
-        { id: user._id, isAdmin: user.isAdmin },
-        process.env.JWT_SECRET
-      );
+        { id: validUser._id, isAdmin: validUser.isAdmin },
+        process.env.JWT_SECRET,
+        { expiresIn: '3650d' }
+    );
       res
         .status(200)
         .cookie("access_token", token, { httpOnly: true })
@@ -114,9 +116,10 @@ export const google = async (req, res, next) => {
       await newUser.save();
 
       const token = jwt.sign(
-        { id: newUser._id, isAdmin: newUser.isAdmin },
-        process.env.JWT_SECRET
-      );
+        { id: validUser._id, isAdmin: validUser.isAdmin },
+        process.env.JWT_SECRET,
+        { expiresIn: '3650d' }
+    );
 
       // if i send in the headers for authentication then simply send it as a token in response //
 
