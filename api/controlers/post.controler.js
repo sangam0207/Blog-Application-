@@ -4,6 +4,20 @@ export const test = (req, res) => {
   res.send("This is for testing of the Post Routes");
 };
 
+export const getPostById=async(req,res)=>{
+  try {
+    const {id}=req.params;
+    const postData=await Post.findById(id);
+    //console.log(post)
+    if(!postData){
+      return res.send({success:false,message:"Post not Found"});
+    }
+      res.status(200).send({success:true,post:postData})
+  } catch (error) {
+    res.status(500).send({success:false,message:error.message})
+  }
+}
+
 export const createPost = async (req, res) => {
   if (!req.user.isAdmin) {
     return res
@@ -36,16 +50,17 @@ export const createPost = async (req, res) => {
 };
 
 export const getPosts = async (req, res) => {
+  console.log(req.query.userId)
   try {
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 9;
     const sortDirection = req.query.order === "asc" ? 1 : -1;
-
+    console.log(req.query.userId)
     const searchCriteria = {};
-    if (req.query.userId) searchCriteria.userId = req.query.userId;
+    if (req.query.userId) searchCriteria.userId =req.query.userId;
+    console.log(typeof req.query.userId);
     if (req.query.category) searchCriteria.category = req.query.category;
     if (req.query.slug) searchCriteria.slug = req.query.slug;
-    if (req.query.postId) searchCriteria._id = req.query.postId;
     if (req.query.searchTerm) {
       searchCriteria.$or = [
         { title: { $regex: req.query.searchTerm, $options: "i" } },
@@ -75,6 +90,9 @@ export const getPosts = async (req, res) => {
     next(error);
   }
 };
+
+
+
 
 // update post
 export const updatePosts = async (req, res) => {

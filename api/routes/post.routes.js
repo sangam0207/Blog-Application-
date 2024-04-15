@@ -1,12 +1,12 @@
 import express from 'express';
-import {test,createPost,getPosts,deletePost,updatePosts} from '../controlers/post.controler.js'
+import {test,getPosts,createPost,deletePost,updatePosts,getPostById} from '../controlers/post.controler.js'
 import {isAuthorized} from '../utils/Authorized.js'
 const router=express.Router();
-router.get('/test',test)
-router.post('/create',isAuthorized,createPost);
 router.get('/getPosts',getPosts);
+router.get('/:id',getPostById);
+router.post('/create',isAuthorized,createPost);
 router.delete('/deletePost/:id',deletePost);
-router.put('updatePost/:id',updatePosts);
+router.put('/updatePost/:id',updatePosts);
 
 
 export default router;
